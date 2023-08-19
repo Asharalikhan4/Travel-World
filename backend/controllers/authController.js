@@ -7,8 +7,8 @@ import User from "../models/User.js";
 export const register = async(req, res) => {
     try{
         // Hashing password
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+        const salt = await bcrypt.genSaltSync(10);
+        const hashedPassword = await bcrypt.hashSync(req.body.password, salt);
 
         const newUser = new User({
             username: req.body.username,
@@ -35,7 +35,7 @@ export const login = async(req, res) => {
         }
 
         // Checking hashed password
-        const checkHashedPassword = bcrypt.compare(req.body.password, user.password);
+        const checkHashedPassword = await bcrypt.compare(req.body.password, user.password);
         if(!checkHashedPassword){
             return res.status(401).json({success: false, message: "Incorrect mail or password"});
         }
