@@ -1,7 +1,8 @@
 import express from "express";
+const router = express.Router();
+
 import { createTour, updateTour, deleteTour, getSingleTour, getAllTour, getTourBySearch, getFeaturedTours, getTourCount } from "../controllers/tourController.js";
 
-const router = express.Router();
 
 router.post("/", createTour);
 router.put("/:id", updateTour);
