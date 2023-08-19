@@ -11,7 +11,7 @@ const app = express();
 const port = process.env.PORT || 3030;
 
 // Test Route
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
     res.send("Api is working fine.");
 });
 
@@ -39,5 +39,5 @@ app.use("/tours", tourRoute);
 
 app.listen(port, () => {
     connect();
-    console.log("Server is running on port", port);
+    console.log("Server is running on port :", port);
 });
