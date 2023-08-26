@@ -21,21 +21,32 @@ app.get("/", (req, res) => {
 
 // Database Connection
 mongoose.set("strictQuery", false);
-const connect = async() => {
-    try{
+const connect = async () => {
+    try {
         await mongoose.connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
         console.log("Database is connected.");
-    } catch (err){
+    } catch (err) {
         console.log(err);
     }
 }
 
+const allowedOrigins = ["http://localhost:5173"];
+
 // Middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true, // Allow cookies and headers with credentials
+}));
 app.use(cookieParser());
 
 // Routes
