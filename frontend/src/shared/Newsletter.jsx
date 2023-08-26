@@ -19,7 +19,7 @@ const Newsletter = () => {
                 </div>
             </Col>
             <Col lg="6">
-                <div className="newletter__img">
+                <div className="newsletter__img">
                     <img src={maleTourist} alt="" />
                 </div>
             </Col>
