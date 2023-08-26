@@ -1,12 +1,21 @@
+// Dependencies
 import { Container, Row, Col, Form, FormGroup, Button } from "reactstrap";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 
+// Component
 import "../styles/login.css";
 import registerImg from "../assets/images/register.png";
 import userIcon from "../assets/images/user.png";
 
+// Api
+import { AuthContext } from "../context/AuthContext";
+import { BASE_URL } from "../utils/config";
+
 const Register = () => {
+
+  const navigate = useNavigate();
+  const { disptach } = useContext(AuthContext);
 
   const [credentials, setCredentials] = useState({
     username: undefined,
@@ -18,9 +27,28 @@ const Register = () => {
     setCredentials(prev => ({ ...prev, [e.target.id]: e.target.value }))
 };
 
-const handleClick = e => {
+const handleClick = async e => {
   e.preventDefault();
+  try{
+    const res = await fetch(`${BASE_URL}/auth/register`, {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
+
+    const result = await res.json();
+
+    if(!res.ok) alert(result.message);
+    disptach({type: "REGISTER_SUCCESS"})
+    navigate("/login");
+  } catch(err){
+    alert(err.message);
+  }
 }
+
+
 
   return (
     <section>
