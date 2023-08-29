@@ -68,8 +68,8 @@ const Home = () => {
           <h2 className="featured__tour-title">
             Our Featured Tours
           </h2>
-          <FeaturedTourList />
         </Col>
+        <FeaturedTourList />
       </Row>
     </Container>
   </section>
